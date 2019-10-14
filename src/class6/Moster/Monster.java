@@ -1,25 +1,25 @@
-package class6;
+package class6.Moster;
 
 public abstract class Monster {
 
-	private int hitPoints;
-	private int attackPoints;
-	private String type;
-	private String[] weaknesses;
+	protected int hitPoints;
+	protected int attackPoints;
+	protected String type;
+	protected String[] weaknesses;
 	
-	public Monster() {
-		type = "";
-		weaknesses = new String[1];
-	}
+	public Monster() {}
 	
-	public Monster(int hitPoints, int attackPoints, String[] weaknesses) {
+	public Monster(int hitPoints, int attackPoints) {
 		this.hitPoints = hitPoints;
 		this.attackPoints = attackPoints;
-		this.weaknesses = weaknesses;
 	}
 	
 	public boolean isWeakAgainst (String otherType) {
 		boolean isWeak = false;
+		
+		if (weaknesses == null) {
+			return false;
+		}
 		
 		for (String weakness: weaknesses) {
 			if (otherType.equals(weakness)) {
@@ -35,22 +35,28 @@ public abstract class Monster {
 	}
 	
 	public boolean attack (Monster otherMonster) {
-		if (this == otherMonster) {
-			return false;
-		}
-		
-		if (this.hitPoints == 0 || otherMonster.getHitPoints() == 0) {
-			return false;
-		} else {
-			if (otherMonster.isWeakAgainst(otherMonster.getType())) {
-				otherMonster.removeHitPoints(20+this.attackPoints);
-			} else {
-				otherMonster.removeHitPoints(this.attackPoints);
+		if (!this.dodge()) {
+			if (this == otherMonster) {
+				return false;
 			}
+			
+			if (this.hitPoints == 0 || otherMonster.getHitPoints() == 0) {
+				return false;
+			} else {
+				if (otherMonster.isWeakAgainst(otherMonster.getType())) {
+					otherMonster.removeHitPoints(20+this.attackPoints);
+				} else {
+					otherMonster.removeHitPoints(this.attackPoints);
+				}
+			}		
+		} else {
+			this.removeHitPoints(10);
 		}
 		
 		return true;
 	}
+	
+	protected abstract boolean dodge();
 
 	public int getHitPoints() {
 		return hitPoints;
@@ -83,4 +89,13 @@ public abstract class Monster {
 	public void setWeaknesses(String[] weaknesses) {
 		this.weaknesses = weaknesses;
 	}	
+	
+	public static void main(String[] args) {
+		Monster monster1 = new WaterMonster(100, 20);
+		Monster monster2 = new FireMonster(100, 20);
+		monster1.attack(monster2);
+		monster2.attack(monster1);
+		System.out.println(monster1.hitPoints + " " + monster1.attackPoints);
+		System.out.println(monster2.hitPoints + " " + monster2.attackPoints);
+	}
 }
