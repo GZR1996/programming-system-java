@@ -10,26 +10,34 @@ public class BestFitStrategy implements PackingStrategy {
         Bin bin = new Bin(capacity, new ArrayList<>());
         bins.add(bin);
 
-        for (Integer value: values) {
+        for (int value: values) {
             int mostFitIdx = -1;
-            int mostFitSize = 0;
+            int mostFitSize = Integer.MAX_VALUE;
             for (int i = 0; i < bins.size(); i++) {
                 Bin currentBin = bins.get(i);
-                int currentSize = currentBin.getSpace() + value;
-                if (currentSize < capacity && capacity - currentSize > mostFitSize) {
+                int futureSpace = currentBin.getSpace() - value;
+                if (futureSpace >= 0 && futureSpace < mostFitSize) {
                     mostFitIdx = i;
-                    mostFitSize = capacity - currentSize;
+                    mostFitSize = futureSpace;
                 }
             }
 
             if (mostFitIdx == -1) {
                 try {
                     bin = new Bin(capacity, new ArrayList<>());
+                    bin.store(value);
                     bins.add(bin);
                 } catch (IllegalArgumentException ex) {
                     return null;
                 }
-            }
+            } else {
+				try {
+					Bin bin_ = bins.get(mostFitIdx);
+					bin_.store(value);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
         }
         return new HashSet<>(bins);
     }

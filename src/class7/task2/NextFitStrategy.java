@@ -9,13 +9,13 @@ public class NextFitStrategy implements PackingStrategy {
 
     @Override
     public Set<Bin> pack(int capacity, List<Integer> values) {
-        Set<Bin> bins = new HashSet<>();
+        List<Bin> bins = new ArrayList<>();
         Bin bin =  new Bin(capacity, new ArrayList<>());
         bins.add(bin);
 
-        for (Integer value: values) {
-            try {
-                bin.store(value);
+        for (int value: values) {
+        	try {
+    			bin.store(value);
             } catch (IllegalArgumentException ex) {
                 bin = new Bin(capacity, new ArrayList<>());
                 try {
@@ -26,6 +26,6 @@ public class NextFitStrategy implements PackingStrategy {
                 }
             }
         }
-        return bins;
+        return new HashSet<Bin>(bins);
     }
 }

@@ -36,7 +36,7 @@ public class WishList {
         Collections.sort(sets, new Comparator<BrickSet>() {
             @Override
             public int compare(BrickSet o1, BrickSet o2) {
-                return 0;
+                return o1.getNum()-o2.getNum();
             }
         });
         return sets;

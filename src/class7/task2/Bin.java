@@ -13,7 +13,7 @@ public class Bin {
 
     public void store(int weight) throws IllegalArgumentException {
         if (weight > this.getSpace()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(weights.toString() + "No space: space " + getSpace() + ", size " + weight);
         } else {
             weights.add(weight);
         }
@@ -25,5 +25,11 @@ public class Bin {
             totalWeight += weight;
         }
         return capacity - totalWeight;
+    }
+    
+    @Override
+    public String toString() {
+    	// TODO Auto-generated method stub
+    	return weights.toString();
     }
 }

@@ -1,5 +1,6 @@
 package class7.task1;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class GameMain {
@@ -43,6 +44,6 @@ public class GameMain {
             }
         }
 
-        System.out.println("You win " + winTimes + "tmes");
+        System.out.println("You win " + winTimes + "times");
     }
 }

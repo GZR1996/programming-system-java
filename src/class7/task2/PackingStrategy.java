@@ -1,5 +1,6 @@
 package class7.task2;
 
+import javax.swing.*;
 import java.util.List;
 import java.util.Set;
 

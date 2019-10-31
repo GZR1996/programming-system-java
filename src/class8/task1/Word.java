@@ -23,7 +23,7 @@ public class Word {
     }
 
     public String wordWithMostOccurrencesOf(char c) {
-        if (words.isEmpty()) {
+    	if (!(Character.isLetter(c) && Character.isLowerCase(c))) {
             return "";
         }
 
@@ -50,13 +50,13 @@ public class Word {
     }
 
     public String longestWordStartingWith(char c) {
-        if (words.isEmpty()) {
+        if (!(Character.isLetter(c) && Character.isLowerCase(c))) {
             return "";
         }
 
         String word = "";
         for (String testWord: words) {
-            if (word.length() < testWord.length() && testWord.startsWith("c")) {
+            if (word.length() < testWord.length() && testWord.toLowerCase().startsWith("c")) {
                 word = testWord;
             }
         }

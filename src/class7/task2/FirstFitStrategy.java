@@ -9,7 +9,7 @@ public class FirstFitStrategy implements PackingStrategy {
 
     @Override
     public Set<Bin> pack(int capacity, List<Integer> values) {
-        Set<Bin> bins = new HashSet<>();
+        List<Bin> bins = new ArrayList<>();
         Bin bin = new Bin(capacity, new ArrayList<>());
         bins.add(bin);
 
@@ -17,10 +17,10 @@ public class FirstFitStrategy implements PackingStrategy {
             boolean isStored = false;
             for (Bin currentBin: bins) {
                 try {
-                    bin.store(value);
+                    currentBin.store(value);
                     isStored = true;
                 } catch (IllegalArgumentException ex) {
-
+                	ex.printStackTrace();
                 }
             }
 
@@ -34,6 +34,6 @@ public class FirstFitStrategy implements PackingStrategy {
                 }
             }
         }
-        return null;
+        return new HashSet<Bin>(bins);
     }
 }
